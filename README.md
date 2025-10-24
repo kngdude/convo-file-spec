@@ -45,6 +45,10 @@ The Metadata Block provides machine-readable context about the conversation.
     <td>participants</td>
     <td><code>Array/required</code></td> An array of participant following Participant Schema. The set of names in this array MUST exactly match the set of names used in the Content Block's Speaker Delimiters.
   </tr>
+  <tr>
+    <td>languages</td>
+    <td><code>Array: string</code></td> An array of languages used in the conversation. If an contributor doesn't provide the language file, an speculative value might be provided (experimental).
+  </tr>
 </table>
 
 To be or not to be creative to expand the schema is uncertain.
@@ -63,6 +67,25 @@ B) Rich (Object): An object providing detailed metadata about the participant. `
 * `name`: `string/required` The participant's name.
 * `generative`: `boolean` `true` if the participant is a generative AI. Defaults to `false`.
 * `generative:model`: `string` The proper model ID string for this (e.g., `gpt-5-2025-08-07` or `gemini-2.5-flash`) if `generative` is `true`.
+
+### Language metadata (notes about speculative values)
+
+This spec allows implementations to include optional language-related metadata (for example, `languages` and `languages_meta`). One special note about `languages_meta.speculative`:
+
+- `languages_meta.speculative` is intended for machine-inferred, unverified results (for example produced by an automatic language-detector or model). It is *not* intended to be authored manually by end-users when they publish or upload conversation files via user-facing APIs.
+- Platform implementers MAY populate `languages_meta.speculative` server-side as a convenience (for example to auto-fill a suggested primary language), but authors should not rely on or intentionally set this field in files they produce.
+- In other words: `languages` is the canonical, author-declared list of languages; `languages_meta.speculative` is an implementation hint for inferred (unverified) values and should be treated as such by clients and UIs (show as “speculative” or similar).
+
+Example (metadata snippet):
+
+```json
+{
+  "languages": ["cmn", "en"],
+  "languages_meta": {
+    "speculative": ["en"],
+  }
+}
+```
 
 ## Example file
 
@@ -98,4 +121,4 @@ Sounds good.
 ## Notes
 
 * I don't expect the file to be more than 10 MB🫣
-* <code>v0.1</code>
+* <code>v0.1.1</code>
