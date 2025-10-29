@@ -19,7 +19,7 @@ The Content Block contains the full text of the conversation.
 * It must be a valid markdown ([CommonMark >=0.31.2](https://spec.commonmark.org/0.31.2/))
 * Speaker turns MUST be denoted using a Speaker Delimiter, which consists of a Level 3 Markdown header (###), a single space, an at-symbol (@), and the participant's name (e.g., ### @Your Name).
 * All text following a Speaker Delimiter, up to the next Speaker Delimiter or the Separator, is considered the content of that speaker's turn.
-* To literally include the sequence ### @ in a conversation, it MUST be escaped with a backslash: \#\#\# @.
+* To literally include the sequence ### @ in a conversation, it MUST be escaped with a backslash: `\#\#\# @`.
 
 ## Metadata Block
 
@@ -48,6 +48,10 @@ The Metadata Block provides machine-readable context about the conversation.
   <tr>
     <td>languages</td>
     <td><code>Array: string</code></td> An array of languages used in the conversation. If an contributor doesn't provide the language file, an speculative value might be provided (experimental).
+  </tr>
+  <tr>
+    <td>title</td>
+    <td><code>string</code></td> Conversation title.
   </tr>
 </table>
 
@@ -114,11 +118,13 @@ Sounds good.
       "generative:model": "gemini-2.5-pro",
       "generative:interface": "https://gemini.google.com/app"
     }
-  ]
+  ],
+  "languages": ["en"],
+  "title": "Conversation Example"
 }
 ```
 
 ## Notes
 
 * I don't expect the file to be more than 10 MB🫣
-* <code>v0.1.1</code>
+* <code>v0.1.2</code>
